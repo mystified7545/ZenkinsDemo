@@ -5,7 +5,7 @@ pipeline {
         stage('code fetch') {
             steps {
                 echo 'code fetch from github'
-                git url:'https://github.com/mystified7545/ZenkinsDemo.git',branch: 'main'
+                git url:'https://github.com/mystified7545/ZenkinsDemo.git',branch: 'Dev'
             }
         }
         stage('build') {
