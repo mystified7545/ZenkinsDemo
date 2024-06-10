@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+        stage('Repo Scan') {
+            steps {
+                echo 'code fetch from github'
+                sh:'trivy repo https://github.com/mystified7545/ZenkinsDemo.git'
+            }
+        }
         stage('code fetch') {
             steps {
                 echo 'code fetch from github'
@@ -14,12 +20,17 @@ pipeline {
                 sh 'docker build -t my-jenkins-site .'
             }
         }
+        stage('Image Scan') {
+            steps {
+                echo 'scan built image'
+                sh 'trivy image my-jenkins-site'
+            }
+        }
         stage('deploy') {
             steps {
                 echo 'Deploy on container'
                 sh 'docker run -d -p 80:80 my-jenkins-site'
             }
-        }
-        
+        }        
     }
 }
